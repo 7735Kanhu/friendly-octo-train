@@ -27,7 +27,7 @@ export default function _layout() {
         options={{ headerTitle: "All Blog post" }}
       />
       <Stack.Screen name="contact" options={{ headerTitle: "Contact",presentation: 'modal' }} />
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      {/* <Stack.Screen name="(tabs)" options={{ headerShown: false }} /> */}
       <Stack.Screen name="(drawer)" options={{ headerShown:false }} />
       {/* </SignedIn> */}
       {/* <SignedOut> */}

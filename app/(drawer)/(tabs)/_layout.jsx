@@ -1,6 +1,6 @@
 import { View, Text, Button, Image, TouchableOpacity } from "react-native";
 import React from "react";
-import { Tabs, router } from "expo-router";
+import { Tabs, router, usePathname } from "expo-router";
 import { FontAwesome5, Entypo } from '@expo/vector-icons';
 import { DrawerToggleButton } from "@react-navigation/drawer";
 import Buttomsheet from "../../../components/Buttomsheet";
@@ -16,7 +16,7 @@ const CustomTabBarButton = ({ onPress, color }) => (
 );
 
 export default function Layout() {
-
+  const pathname = usePathname();
 
   
   return (
@@ -47,6 +47,14 @@ export default function Layout() {
           },
           tabBarLabel: "HELP",
           headerTitle: "Help",
+          headerStyle: {
+            backgroundColor: 'green',
+            borderBottomWidth: 0,  
+            elevation: 0,          
+            shadowOpacity: 0,      
+          },
+          headerTitleAlign: 'center',
+          headerTintColor: '#fff', 
         }}
       />
        <Tabs.Screen
@@ -86,13 +94,10 @@ export default function Layout() {
             return <FontAwesome5 name="user-alt" size={22} color={color} />;
           },
           tabBarLabel: "PROFILE",
-          headerTitle: "Profile",
+          headerShown: pathname == "/profile"? true:false,
+          headerTitle: pathname == "/profile"? "Profile": "Profile edit",
           headerRight: () => (
-            <FontAwesome5 name="edit" size={24} color="#fff" onPress={() => router.push("profile/new")} style={{ marginRight: '15%' }}/>
-            // <Button
-            //   onPress={() => router.push("profile/new")}
-            //   title="Edit Profile"
-            // />
+            <FontAwesome5 name={pathname == "/profile" ? "edit" : "save"} size={24} color="#fff" onPress={() => router.push("profile/new")} style={{ marginRight: '15%' }}/>
           ),
           headerStyle: {
             backgroundColor: 'green',
