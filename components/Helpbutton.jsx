@@ -13,8 +13,8 @@ export default Helpbutton
 const styles = StyleSheet.create({
   help:{
     position:'absolute',
-    top:-100,
-    left:135,
+    top:-110,
+    left:'37%',
     backgroundColor:'#fff',
     padding:4,
     borderRadius:50

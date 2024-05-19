@@ -9,7 +9,7 @@ import Buttomsheet from "../../../components/Buttomsheet";
 const CustomTabBarButton = ({ onPress, color }) => (
   <TouchableOpacity onPress={onPress} style={{ alignItems: 'center', justifyContent: 'center' }}>
     <Image 
-      source={require('./../../../assets/images/helpbutton.png')} 
+      source={require('./../../../assets/images/button/help-button.png')} 
       style={{ width: 24, height: 24, tintColor: color }}
     />
   </TouchableOpacity>
@@ -21,9 +21,10 @@ export default function Layout() {
   
   return (
     <>
-    <Tabs screenOptions={{
+      
+    <Tabs initialRouteName='profile' screenOptions={{
       // headerShown: false,
-      headerLeft:() =><DrawerToggleButton  tintColor="green"/>,
+      headerLeft:() =><DrawerToggleButton  tintColor="#FFF"/>,
           tabBarStyle: {
             backgroundColor: "white",
             borderTopLeftRadius: 30,
@@ -33,7 +34,7 @@ export default function Layout() {
           tabBarActiveTintColor: "green",
           tabBarInactiveTintColor: "gray",
           tabBarLabelStyle: {
-            fontSize: 15,
+            fontSize: 13,
             fontWeight:'bold',
             marginBottom: 8,
           },
@@ -42,7 +43,7 @@ export default function Layout() {
         name="help"
         options={{
           tabBarIcon: ({ color }) => {
-            return <FontAwesome5 name="hands-helping" size={24} color={color} />;
+            return <FontAwesome5 name="hands-helping" size={22} color={color} />;
           },
           tabBarLabel: "HELP",
           headerTitle: "Help",
@@ -52,7 +53,7 @@ export default function Layout() {
           name="history"
           options={{
             tabBarIcon: ({ color }) => {
-             return <FontAwesome5 name="history" size={24} color={color} />
+             return <FontAwesome5 name="history" size={22} color={color} />
             },
             tabBarLabel: "HISTORY",
             headerTitle: "History",
@@ -72,7 +73,7 @@ export default function Layout() {
           name="wallet"
           options={{
             tabBarIcon: ({ color }) => {
-              return <Entypo name="wallet" size={24} color={color} />
+              return <Entypo name="wallet" size={22} color={color} />
             },
             tabBarLabel: "WALLET",
             headerTitle: "Wallet",
@@ -82,16 +83,25 @@ export default function Layout() {
         name="profile"
         options={{
           tabBarIcon: ({ color }) => {
-            return <FontAwesome5 name="user-alt" size={24} color={color} />;
+            return <FontAwesome5 name="user-alt" size={22} color={color} />;
           },
           tabBarLabel: "PROFILE",
           headerTitle: "Profile",
           headerRight: () => (
-            <Button
-              onPress={() => router.push("profile/new")}
-              title="Edit Profile"
-            />
+            <FontAwesome5 name="edit" size={24} color="#fff" onPress={() => router.push("profile/new")} style={{ marginRight: '15%' }}/>
+            // <Button
+            //   onPress={() => router.push("profile/new")}
+            //   title="Edit Profile"
+            // />
           ),
+          headerStyle: {
+            backgroundColor: 'green',
+            borderBottomWidth: 0,  
+            elevation: 0,          
+            shadowOpacity: 0,      
+          },
+          headerTitleAlign: 'center',
+          headerTintColor: '#fff', 
         }}
       />
     </Tabs>

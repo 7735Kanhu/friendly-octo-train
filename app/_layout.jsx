@@ -16,7 +16,7 @@ export default function _layout() {
         },
         headerTintColor: "white",
       }}
-      initialRouteName='index'
+      initialRouteName='(tabs)'
     >
       {/* <Stack.Screen name="index" options={{ headerTitle: "Home", headerRight:()=><Button onPress={()=>router.push('contact')} title='Contact'/> }} /> */}
       <Stack.Screen name="index" options={{ headerShown:false }} />
@@ -41,6 +41,7 @@ export default function _layout() {
 }
 const styles = StyleSheet.create({
   container:{
-    flex:1
+    flex:1,
+    backgroundColor:'green'
   }
 })
