@@ -18,6 +18,9 @@ import {
   useSafeAreaInsets,
 } from "react-native-safe-area-context";
 import { Link } from "expo-router";
+import { createPhoneSession } from '../appwriteConfig.js'
+
+// console.log(account);
 
 export default function login() {
   const insets = useSafeAreaInsets();
@@ -29,6 +32,8 @@ export default function login() {
     name: "India",
   });
   const [countryPickerVisible, setCountryPickerVisible] = useState(false);
+  const [otp, setOtp] = useState('');
+  const [userId, setUserId] = useState(null);
 
   const onSelectCountry = (country) => {
     setCountryCode(country.cca2);
@@ -36,14 +41,21 @@ export default function login() {
     setCountryPickerVisible(false);
   };
 
-  const onSubmit = () => {
+  const onSubmit = async() => {
     // Perform your desired action with
+    console.log(phoneNumber);
+    try {
+      const session = await createPhoneSession(phoneNumber);
+      Alert.alert('Success', `Session created for user ID: ${session.userId}`);
+  } catch (error) {
+      Alert.alert('Error', 'Failed to create phone session');
+  }
     // the phone number and country code
-    Alert.alert(
-      "Form Submitted",
-      `Phone Number: ${phoneNumber} 
-                    \nCountry Code: ${countryCode}`
-    );
+    // Alert.alert(
+    //   "Form Submitted",
+    //   `Phone Number: ${phoneNumber} 
+    //                 \nCountry Code: ${countryCode}`
+    // );
   };
 
   const toggleCountryPicker = () => {
