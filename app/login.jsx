@@ -5,35 +5,37 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
-  Button,
-  Alert,
   KeyboardAvoidingView,
   ScrollView,
+  Alert,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import PhoneInput from "react-native-phone-input";
 import CountryPicker from "react-native-country-picker-modal";
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from "react-native-safe-area-context";
+import { SafeAreaProvider, useSafeAreaInsets } from "react-native-safe-area-context";
 import { Link } from "expo-router";
-import { createPhoneSession } from '../appwriteConfig.js'
+import { useRouter } from 'expo-router';
+import firebase from "../firebase";
+import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
+import { useDispatch } from 'react-redux';
+import { setVerificationId } from '../store/authSlice'
 
-// console.log(account);
-
-export default function login() {
+const Login = () => {
+  const router = useRouter();
+  const dispatch = useDispatch();
   const insets = useSafeAreaInsets();
   const [phoneNumber, setPhoneNumber] = useState("");
   const [countryCode, setCountryCode] = useState("");
   const [selectedCountry, setSelectedCountry] = useState({
-    // cca2: 'IN',
     callingCode: "91",
     name: "India",
   });
   const [countryPickerVisible, setCountryPickerVisible] = useState(false);
   const [otp, setOtp] = useState('');
   const [userId, setUserId] = useState(null);
+  const recaptchaVerifier = useRef(null);
+  // const [verificationId, setVerificationId] = useState(null);
+  const [message, setMessage] = useState('');
 
   const onSelectCountry = (country) => {
     setCountryCode(country.cca2);
@@ -41,21 +43,22 @@ export default function login() {
     setCountryPickerVisible(false);
   };
 
-  const onSubmit = async() => {
-    // Perform your desired action with
-    console.log(phoneNumber);
+
+  const onSubmit = async () => {
+    const phoneProvider = new firebase.auth.PhoneAuthProvider();
     try {
-      const session = await createPhoneSession(phoneNumber);
-      Alert.alert('Success', `Session created for user ID: ${session.userId}`);
-  } catch (error) {
-      Alert.alert('Error', 'Failed to create phone session');
-  }
-    // the phone number and country code
-    // Alert.alert(
-    //   "Form Submitted",
-    //   `Phone Number: ${phoneNumber} 
-    //                 \nCountry Code: ${countryCode}`
-    // );
+      const verificationId = await phoneProvider.verifyPhoneNumber(phoneNumber, recaptchaVerifier.current);
+      setMessage('Verification code sent to your phone');
+      if(verificationId){
+        Alert.alert(`OTP send to your phone number${phoneNumber}`)
+        dispatch(setVerificationId(verificationId));
+        router.push('/verifyotp')
+      }else{
+        Alert.alert("Something wents wrong.")
+      }
+    } catch (err) {
+      setMessage(`Error: ${err.message}`);
+    }
   };
 
   const toggleCountryPicker = () => {
@@ -64,6 +67,18 @@ export default function login() {
 
   return (
     <View style={styles.container}>
+      <FirebaseRecaptchaVerifierModal
+        ref={recaptchaVerifier}
+        firebaseConfig={{
+          apiKey: "AIzaSyA5THpt_2geodgKCzjKP0D0k8wyeAHGdZA",
+          authDomain: "help-7c56d.firebaseapp.com",
+          projectId: "help-7c56d",
+          storageBucket: "help-7c56d.appspot.com",
+          messagingSenderId: "313013637870",
+          appId: "1:313013637870:web:7dcb9681483f1ba95199ff",
+          measurementId: "G-EZHY8516RB"
+        }}
+      />
       <View style={{ alignItems: "center" }}>
         <Image
           source={require("../assets/images/otp3.webp")}
@@ -77,10 +92,10 @@ export default function login() {
           phone number
         </Text>
       </View>
-        <KeyboardAvoidingView style={styles.buttom_box}>
+      <KeyboardAvoidingView style={styles.buttom_box}>
         <ScrollView>
-      <View style={[styles.buttom_box, { paddingTop: insets.top }]}>
-          <View style={styles.form}>
+          <View style={[styles.buttom_box, { paddingTop: insets.top }]}>
+            <View style={styles.form}>
               <PhoneInput
                 initialCountry="in"
                 value={phoneNumber}
@@ -102,35 +117,31 @@ export default function login() {
                   closeButtonImageStyle={styles.countryPickerCloseButton}
                 />
               )}
-            <TouchableOpacity onPress={onSubmit} style={styles.submitButton}>
-            <Link href={'/verifyotp'}>
-              <Text
-                style={{ color: "#fff", fontSize: 20, textAlign: "center" }}
-              >
-                Send OTP
+              <TouchableOpacity onPress={onSubmit} style={[styles.submitButton,phoneNumber.length < 10 && { opacity: 0.5 }]} disabled={phoneNumber.length <10}>
+                {/* <Link href={'/verifyotp'}> */}
+                  <Text style={{ color: "#fff", fontSize: 20, textAlign: "center" }}>Send OTP</Text>
+                {/* </Link> */}
+              </TouchableOpacity>
+            </View>
+            <View style={styles.policy}>
+              <Text style={styles.policy_text}>
+                By continuing you agree that you have read and accept our <Text style={{ fontSize: 15, fontWeight: 'bold' }}>T&Cs and
+                Privacy Policy.</Text>
               </Text>
-              </Link>
-            </TouchableOpacity>
+            </View>
           </View>
-          <View style={styles.policy}>
-            <Text style={styles.policy_text}>
-              By countinue you agree that you have read and accept our <Text style={{fontSize:15, fontWeight:'bold'}}>T&Cs and
-              Privacy Policy.</Text>
-            </Text>
-          </View>
-      </View>
-      </ScrollView>
-        </KeyboardAvoidingView>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </View>
   );
-}
+};
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: "auto",
     backgroundColor: "green",
     display: "flex",
-    // justifyContent:'center',
     alignItems: "center",
     marginTop: -90,
     position: "relative",
@@ -139,7 +150,6 @@ const styles = StyleSheet.create({
     width: 200,
     margin: "auto",
     height: 400,
-    // backgroundColor:'#000'
   },
   logo_text: {
     margin: "auto",
@@ -163,7 +173,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     borderTopLeftRadius: 150,
     display: "flex",
-    // justifyContent:'center',
     alignItems: "center",
   },
   form: {
@@ -172,7 +181,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 40,
-    // marginVertical:50
   },
   phoneInput: {
     height: 50,
@@ -183,28 +191,28 @@ const styles = StyleSheet.create({
     marginBottom: 50,
     paddingHorizontal: 10,
   },
-
   submitButton: {
     width: 280,
     backgroundColor: "green",
     paddingVertical: 8,
     paddingHorizontal: 20,
     borderRadius: 5,
-    textAlign:'center',
-    display:'flex',
-    justifyContent:'center',
-    alignItems:'center'
+    textAlign: 'center',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   flag: {
     width: 30,
     height: 20,
   },
-  policy:{
-    paddingHorizontal:20,
-    marginTop:50
+  policy: {
+    paddingHorizontal: 20,
+    marginTop: 50
   },
-  policy_text:{
-    textAlign:'center',
-    // fontSize:12,
+  policy_text: {
+    textAlign: 'center',
   }
 });
+
+export default Login;

@@ -28,7 +28,7 @@ import { Client, Account, ID } from 'appwrite';
 // Initialize the Appwrite client
 const client = new Client()
     .setEndpoint('https://cloud.appwrite.io/v1') // Your API Endpoint
-    .setProject('656ac2f1a9a3ffdb9631'); // Your project ID
+    .setProject('664cc1510025520f484b'); // Your project ID
 
 // Initialize the Account service
 const account = new Account(client);
@@ -41,7 +41,7 @@ const createPhoneSession = async (phone) => {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
-              'X-Appwrite-Project': '656ac2f1a9a3ffdb9631',
+              'X-Appwrite-Project': '664cc1510025520f484b',
           },
           body: JSON.stringify({
               userId: ID.unique(),
@@ -61,6 +61,46 @@ const createPhoneSession = async (phone) => {
   }
 };
 
+const verifyOtp = async (userId, otp) => {
+  console.log(userId,otp);
+  try {
+      const response = await fetch(`https://cloud.appwrite.io/v1/account/sessions/${userId}`, {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+              'X-Appwrite-Project': '664cc1510025520f484b',
+          },
+          body: JSON.stringify({
+              userId: userId,
+              secret: otp,
+          }),
+      });
 
-export { createPhoneSession };
+      // const data = await response.json();
+
+      // if (!response.ok) {
+      //     console.error('Response error:', data); // Log the response error for debugging
+      //     throw new Error(`Failed to verify OTP: ${data.message}`);
+      // }
+
+      // return data;
+       // Check if the response is not OK
+       if (!response.ok) {
+        // Log the raw response text for debugging
+        const errorText = await response.text();
+        console.error('Response error:', errorText);
+        throw new Error(`Failed to verify OTP: ${response.statusText}`);
+    }
+
+    // Parse and return the JSON response
+    const data = await response.json();
+    return data;
+  } catch (error) {
+      console.error('Error verifying OTP:', error);
+      throw error;
+  }
+};
+
+
+export { createPhoneSession ,verifyOtp};
 

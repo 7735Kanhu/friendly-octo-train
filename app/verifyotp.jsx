@@ -1,11 +1,39 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native'
 import React, { useState } from 'react'
 import OTPTextView from 'react-native-otp-textinput';
 import { Link } from 'expo-router';
 // import Clipboard from '@react-native-clipboard/clipboard';
+import { verifyOtp } from './../appwriteConfig.js';
+import { useRouter, useLocalSearchParams } from 'expo-router';
+import { useSelector } from 'react-redux';
+import { setVerificationId } from '../store/authSlice';
+import firebase from '../firebase';
+
 
 export default function verifyotp() {
-    // const [otpInput, setOtpInput] = useState('');
+  const verificationId = useSelector(setVerificationId);
+  // console.log('Retrieved verificationId from state:', verificationId.payload.auth.verificationId);
+  
+    const [otpInput, setOtpInput] = useState('');
+    const { userId } = useLocalSearchParams();
+    const router = useRouter();
+
+    const handleOtpVerification = async () => {
+      const credential = firebase.auth.PhoneAuthProvider.credential(verificationId.payload.auth.verificationId, otpInput);
+    try {
+      await firebase.auth().signInWithCredential(credential);
+      // setMessage('Phone authentication successful');
+      Alert.alert('Phone authentication successful')
+      router.push('/help')
+    } catch (err) {
+      // setMessage(`Error: ${err.message}`);
+      console.log(err.message);
+    }
+  };
+  const handleOTPChange = (enteredOTP) => {
+    // Update the state with the entered OTP
+    setOtpInput(enteredOTP);
+};
   return (
     <View style={styles.container}>
       <View>
@@ -20,15 +48,15 @@ export default function verifyotp() {
         </View>
       </View>
       <View style={styles.bottom}>
-        <OTPTextView inputCount={5} containerStyle={styles.textInputContainer} keyboardType='numeric'/>
+        <OTPTextView inputCount={6} containerStyle={styles.textInputContainer} keyboardType='numeric'  handleTextChange={handleOTPChange}/>
         <Text style={{marginTop:10,}}>Don't received an OTP ?</Text>
         <TouchableOpacity style={{marginTop:10}}>
             <Text style={{fontSize:15,fontWeight:'bold'}}>Resend an OTP</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.otpbuttom}>
-        <Link href={'/help'}>
+        <TouchableOpacity style={styles.otpbuttom} onPress={handleOtpVerification}>
+        {/* <Link href={'/help'}> */}
             <Text style={{fontSize:20,color:'#fff'}}>Verify OTP</Text>
-            </Link>
+            {/* </Link> */}
         </TouchableOpacity>
       </View>
     </View>
@@ -66,7 +94,7 @@ const styles = StyleSheet.create({
   textInputContainer: {
     marginTop: 60,
     // marginLeft:-60,
-    width:300,
+    width:270,
   },
   otpbuttom:{
     marginTop:70,
