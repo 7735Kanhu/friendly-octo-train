@@ -19,7 +19,7 @@ export default function Page() {
       <Text style={styles.sub_header}>Your go-to app for finding assistance when you need it most. Whether you're looking for health services, financial advice, or simply someone to talk to, Community Helper is here to connect you with the resources you need.</Text>
         </View>
       <TouchableOpacity style={styles.startBtn}>
-      <Link href={'/login'}>
+      <Link href={'/help'}>
         <Text style={styles.btnText}>Get Started</Text>
         </Link>
       </TouchableOpacity>

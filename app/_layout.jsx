@@ -6,36 +6,20 @@ import { Provider } from 'react-redux';
 import { store } from '../store/index'
 
 export default function _layout() {
+  
   return (
     // <ClerkProvider publishableKey="pk_test_bGFyZ2UtZHJhZ29uLTI0LmNsZXJrLmFjY291bnRzLmRldiQ">
     <Provider store={store}>
       <SafeAreaView style={styles.container}>
-    <Stack
-      screenOptions={{
-        headerShown:false,
-          headerStyle: {
-          backgroundColor: "green",
-        },
-        headerTintColor: "white",
-      }}
-      initialRouteName='(tabs)'
-    >
-      {/* <Stack.Screen name="index" options={{ headerTitle: "Home", headerRight:()=><Button onPress={()=>router.push('contact')} title='Contact'/> }} /> */}
+    <Stack screenOptions={{headerShown:false,headerStyle: {backgroundColor: "green",},headerTintColor: "white",}}initialRouteName='index' >
       <Stack.Screen name="index" options={{ headerShown:false }} />
-      {/* <SignedIn> */}
+      <Stack.Screen name="login" options={{ headerShown:false }} />
+      <Stack.Screen name="verifyotp" options={{ headerShown:false }} />
       <Stack.Screen name="about" options={{ headerTitle: "About" }} />
-      <Stack.Screen
-        name="blog/index"
-        options={{ headerTitle: "All Blog post" }}
-      />
+      <Stack.Screen name="blog/index" options={{ headerTitle: "All Blog post" }}/>
       <Stack.Screen name="contact" options={{ headerTitle: "Contact",presentation: 'modal' }} />
       {/* <Stack.Screen name="(tabs)" options={{ headerShown: false }} /> */}
       <Stack.Screen name="(drawer)" options={{ headerShown:false }} />
-      {/* </SignedIn> */}
-      {/* <SignedOut> */}
-      <Stack.Screen name="login" options={{ headerShown:false }} />
-      <Stack.Screen name="verifyotp" options={{ headerShown:false }} />
-      {/* </SignedOut> */}
     </Stack>
     </SafeAreaView>
     </Provider>

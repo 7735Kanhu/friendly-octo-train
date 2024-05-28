@@ -38,6 +38,7 @@ export default function Layout() {
             fontWeight:'bold',
             marginBottom: 8,
           },
+          
     }}>
       <Tabs.Screen
         name="help"
@@ -84,7 +85,16 @@ export default function Layout() {
               return <Entypo name="wallet" size={22} color={color} />
             },
             tabBarLabel: "WALLET",
-            headerTitle: "Wallet",
+            headerTitle: "My Wallet",
+            // headerShown: false
+            headerStyle: {
+              backgroundColor: 'green',
+              borderBottomWidth: 0,  
+              elevation: 0,          
+              shadowOpacity: 0,      
+            },
+            headerTitleAlign: 'center',
+            headerTintColor: '#fff', 
           }}
         />
       <Tabs.Screen
