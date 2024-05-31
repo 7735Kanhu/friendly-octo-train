@@ -46,7 +46,17 @@ const Buttomsheet = () => {
         // onChange={handleSheetChanges}
       >
         <BottomSheetView style={styles.contentContainer}>
-          <Text>Awesome 🎉</Text>
+          <Text>Choose your Help 🎉</Text>
+          <View style={[{flexDirection:"row",gap:10},styles.featureContainer]}>
+            <Text style={styles.featcher}>Grocerry</Text>
+            <Text style={styles.featcher}>Medical</Text>
+            <Text style={styles.featcher}>Vehicle</Text>
+            <Text style={styles.featcher}>Education</Text>
+            <Text style={styles.featcher}>Picker</Text>
+            <Text style={styles.featcher}>Workers</Text>
+            <Text style={styles.featcher}>Health</Text>
+            <Text style={styles.featcher}>Delivery</Text>
+          </View>
         </BottomSheetView>
       </BottomSheetModal>
     </View>
@@ -67,4 +77,18 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
   },
+  featureContainer:{
+    marginTop:5,
+ flexWrap:"wrap",
+ justifyContent:"center"
+  },
+  featcher:{
+    backgroundColor:'#ACF5CA',
+    color:'#000',
+    padding:4,
+    borderRadius:50,
+    paddingHorizontal:15,
+    borderWidth:2,
+    borderColor:"green"
+  }
 });
