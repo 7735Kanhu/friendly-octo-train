@@ -51,38 +51,48 @@ export default function Page() {
               <Text className='font-semibold text-md p-1 px-2'>Withdraw</Text>
             </View>
             {/* <ScrollView style={{flex:1}}> */}
-            <View className='flex flex-col gap-1'>
+            <ScrollView style={styles.walletHistory} className='flex flex-col gap-1' showsVerticalScrollIndicator={false}>
               <View className='bg-white p-2 rounded-lg shadow-lg flex flex-row justify-between align-middle items-center'>
               <View className='flex flex-row gap-5 items-center'>
               <Entypo name="arrow-down" size={26} color="green" />
               <View>
                 <Text className='text-gray-400 text-xs'>Today 2.30</Text>
-                <Text className='text-lg font-bold'>Cash Deposite</Text>
+                <Text className='text-md font-bold'>Cash Deposite</Text>
               </View>
               </View>
-              <Text className='text-lg font-bold text-green-700'>+ 870.00</Text>
+              <Text className='text-md font-bold text-green-700'>+ 870.00</Text>
               </View>
               <View className='bg-white p-2 rounded-lg shadow-lg flex flex-row justify-between align-middle items-center'>
               <View className='flex flex-row gap-5 items-center'>
               <Entypo name="arrow-up" size={26} color="red" />
               <View>
                 <Text className='text-gray-400 text-xs'>Today 2.30</Text>
-                <Text className='text-lg font-bold'>Cash Withdraw</Text>
+                <Text className='text-md font-bold'>Cash Withdraw</Text>
               </View>
               </View>
-              <Text className='text-lg font-bold text-red-500'>- 500.00</Text>
+              <Text className='text-md font-bold text-red-500'>- 500.00</Text>
               </View>
               <View className='bg-white p-2 rounded-lg shadow-lg flex flex-row justify-between align-middle items-center'>
               <View className='flex flex-row gap-5 items-center'>
               <Entypo name="arrow-down" size={26} color="green" />
               <View>
                 <Text className='text-gray-400 text-xs'>Today 2.30</Text>
-                <Text className='text-lg font-bold'>Cash Deposite</Text>
+                <Text className='text-md font-bold'>Cash Deposite</Text>
               </View>
               </View>
-              <Text className='text-lg font-bold text-green-700'>+ 870.00</Text>
+              <Text className='text-md font-bold text-green-700'>+ 870.00</Text>
               </View>
-            </View>
+              <View className='bg-white p-2 rounded-lg shadow-lg flex flex-row justify-between align-middle items-center'>
+              <View className='flex flex-row gap-5 items-center'>
+              <Entypo name="arrow-up" size={26} color="red" />
+              <View>
+                <Text className='text-gray-400 text-xs'>Today 2.30</Text>
+                <Text className='text-md font-bold'>Cash Deposite</Text>
+              </View>
+              </View>
+              <Text className='text-md font-bold text-green-700'>+ 870.00</Text>
+              </View>
+            </ScrollView>
             {/* </ScrollView> */}
           </View>
       </View>
@@ -127,5 +137,8 @@ const styles = StyleSheet.create({
     alignItems:'center',
     justifyContent:'center',
     // marginHorizontal:'auto'
-  }
+  },
+  // walletHistory:{
+  //   flex:1
+  // }
 })
