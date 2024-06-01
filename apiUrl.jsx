@@ -1,3 +1,3 @@
-const apiUrl = 'http://127.0.0.1:8000/api'; // Replace 'http://your-api-url' with your actual API URL
+const apiUrl = 'http://192.168.0.151:8000/api';
 
 export default apiUrl;
