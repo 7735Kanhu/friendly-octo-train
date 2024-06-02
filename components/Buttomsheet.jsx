@@ -9,6 +9,7 @@ import {
 import Helpbutton from './Helpbutton';
 import axios from 'axios';
 import * as Animatable from 'react-native-animatable';
+import { Animations } from '../constants/Animations';
 
 const Buttomsheet = () => {
     const bottomSheetModalRef  = useRef(null);
@@ -17,6 +18,7 @@ const Buttomsheet = () => {
     const [subFeatures, setSubFeatures] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [selectedFeature,setSelectedFeature] = useState()
 
     const handlePresentModalPress = () => {
         bottomSheetModalRef.current?.present();
@@ -28,7 +30,7 @@ const Buttomsheet = () => {
         setLoading(true);
         try {
             const response = await axios.get(`${apiUrl}/feature_view/`);
-            setFeatures(response.data.data || []);  // Ensure data is an array
+            setFeatures(response.data.data);  // Ensure data is an array
         } catch (error) {
             console.error(error);
             setError('Failed to fetch features');
@@ -41,16 +43,22 @@ const Buttomsheet = () => {
     const handleSubFeatucher= async(id)=>{
       try {
         const responce = await axios.get(`${apiUrl}/subfeature_view/${id}`);
-        console.log(responce.data);
+        console.log(responce.data.data);
+        setSubFeatures(responce.data.data);
+        setFeatures([])
+        setSelectedFeature(id)
+        // console.log(features);
       } catch (error) {
         console.log(error);
       }
     }
+    // handelcreateHelp
+    const handelcreateHelp =()=>{
 
-    useEffect(() => {
-        console.log(features);
-    }, [features]);
+    }
 
+
+    const animations = Animations[ Math.floor(Math.random() * Animations.length)] 
     return (
         <BottomSheetModalProvider>
             <View style={styles.container}>
@@ -61,28 +69,66 @@ const Buttomsheet = () => {
                     snapPoints={snapPoints}
                 >
                     <BottomSheetView style={styles.contentContainer}>
-                        <Text>Choose your Help 🎉</Text>
+                        <Text style={{fontSize:15,marginBottom:10}}>Choose your Help 🎉</Text>
                         {loading ? (
                             <Text>Loading...</Text>
                         ) : error ? (
                             <Text>{error}</Text>
                         ) : (
-                            <Animatable.View 
-                                style={[{ flexDirection: "row", gap: 10 }, styles.featureContainer]}
-                                animation="fadeInUp"
-                                duration={1000}
-                                delay={300}
-                            >
-                                {features.length > 0 ? (
-                                    features.map((item, id) => (
+                          <View style={{flex:1, flexDirection:"row",flexWrap:"wrap",margin:"auto",padding:5,width:"auto",justifyContent:"center",gap:10}}>
+
+                          {selectedFeature? <Animatable.View
+                          style={[{ flexDirection: "row"}, styles.selectedFeature]}
+                          animation = {animations}
+                          duration={1000}
+                          delay={300}
+                          >
+
+                          <TouchableOpacity style={styles.feature}>
+                                        <Text >{selectedFeature}</Text>
+                                      </TouchableOpacity>
+                          </Animatable.View>:
+                          features.length > 0 ? (
+                            features.map((item, id) => (
+                              <Animatable.View 
+                              style={[{ flexDirection: "row", gap: 10 }, styles.featureContainer]}
+                              animation = {animations}
+                              duration={1000}
+                              delay={id * 300}
+                              key={id}
+                              >
                                       <TouchableOpacity style={styles.feature} key={id} onPress={()=>handleSubFeatucher(item.type)}>
                                         <Text >{item.type}</Text>
                                       </TouchableOpacity>
+                                      </Animatable.View>
                                     ))
-                                ) : (
+                                  ) : (
                                     <Text>No Help Available right now, please wait...</Text>
-                                )}
-                            </Animatable.View>
+                                  )}
+                                {/* <View style={{borderBottomColor:"green",borderBottomWidth:2,paddingBottom:10}}><Text>Select your Sub Help</Text></View> */}
+                                  <View style={styles.subFeatures}>
+                                  {
+                                    subFeatures.length >0 &&(
+                                        subFeatures.map((item,id)=>(
+                                            <Animatable.View
+                                            style={[{ flexDirection: "row", gap: 10 }, styles.featureContainer]}
+                                            animation={animations}
+                                            duration={1000}
+                                            delay={id * 200}
+                                            key={id}
+                                        >
+                                            <View>
+
+                                            <TouchableOpacity style={styles.subfeature} key={id} onPress={()=>handelcreateHelp(item.type)}>
+                                        <Text >{item.type}</Text>
+                                      </TouchableOpacity>
+                                            </View>
+                                        </Animatable.View>
+                                        ))
+                                    )
+                                  }
+                                  </View>
+                                  </View>
                         )}
                     </BottomSheetView>
                 </BottomSheetModal>
@@ -106,7 +152,9 @@ const styles = StyleSheet.create({
     featureContainer: {
         marginTop: 5,
         flexWrap: "wrap",
-        justifyContent: "center"
+        justifyContent: "center",
+        // margin:"auto",
+        alignItems:"center"
     },
     feature: {
         backgroundColor: '#ACF5CA',
@@ -116,5 +164,31 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
         borderWidth: 2,
         borderColor: "green"
+    },
+    selectedFeature:{
+        width:"100%",
+        margin:"auto",
+        justifyContent:"center",
+        marginBottom:10,
+    },
+    subFeatures:{
+        flex:1,
+        alignItems:"center",
+        justifyContent:"center",
+        flexDirection:'row',
+        margin:"auto",
+        width:"auto",
+        gap:10
+    },
+    subfeature:{
+        backgroundColor: '#ACF5CA',
+        color: '#000',
+        padding: 7,
+        borderRadius: 50,
+        // paddingHorizontal: 5,
+        borderWidth: 2,
+        borderColor: "green",
+        marginHorizontal:"auto",
+        margin:20,
     }
 });
