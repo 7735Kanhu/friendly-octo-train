@@ -46,9 +46,9 @@ if (isLoading) {
         userToken ? (
           <Stack screenOptions={{headerShown:false,headerStyle: {backgroundColor: "green",},headerTintColor: "white",}}initialRouteName='help' >
       <Stack.Screen name="(drawer)" options={{ headerShown:false }} />
-      <Stack.Screen name="about" options={{ headerTitle: "About" }} />
+      {/* <Stack.Screen name="about" options={{ headerTitle: "About" }} />
       <Stack.Screen name="blog/index" options={{ headerTitle: "All Blog post" }}/>
-      <Stack.Screen name="contact" options={{ headerTitle: "Contact",presentation: 'modal' }} />
+      <Stack.Screen name="contact" options={{ headerTitle: "Contact",presentation: 'modal' }} /> */}
     </Stack>
         ):(
           <Stack screenOptions={{headerShown:false,headerStyle: {backgroundColor: "green",},headerTintColor: "white",}}initialRouteName='index' >

@@ -7,13 +7,28 @@ import { Ionicons } from '@expo/vector-icons';
 // import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer'
 import { router, usePathname } from 'expo-router';
+import { AntDesign } from '@expo/vector-icons';
+import { useRouter, useLocalSearchParams } from 'expo-router';
+import * as SecureStore from 'expo-secure-store';
+import firebase from "../../firebase";
+
+
+
 
 const CustomDrawerContent = (props) =>{
     const pathname = usePathname();
+    const router = useRouter();
+
 
   useEffect(() => {
     console.log(pathname);
   }, [pathname]);
+
+  const handleLogout = async()=>{
+    await SecureStore.deleteItemAsync('userToken');
+    await firebase.auth().signOut();
+    router.push('login')
+  }
 
     return (
     <DrawerContentScrollView {...props} >
@@ -41,6 +56,13 @@ const CustomDrawerContent = (props) =>{
         <DrawerItem icon={({color,size})=>(
             <Ionicons name="settings" size={24} color={pathname == "/settings" ? "#fff" : "#000"} />
         )} labelStyle={[styles.navItemLabel,{ color: pathname == "/settings" ? "#fff" : "#000" }]} label={'Settings'} style={{ backgroundColor: pathname == "/settings" ? "green" : "#fff" }}  onPress={()=>router.push('/settings')}/>
+        <DrawerItem icon={({color,size})=>(
+            <AntDesign name="logout" size={24} color={"#000"} />
+        )} labelStyle={[styles.navItemLabel,{ color:"#000"}]} label={'Logout'} style={{ backgroundColor: "#fff",marginTop:300 }}  onPress={handleLogout}/>
+        <View>
+          <Text style={{color:"#ccc",textAlign:"center"}}>Version 1.0</Text>
+        </View>
+       
     </DrawerContentScrollView>
     )
 }
