@@ -8,21 +8,29 @@ import { useRouter, useLocalSearchParams } from 'expo-router';
 import { useSelector } from 'react-redux';
 import { setVerificationId } from '../store/authSlice';
 import firebase from '../firebase';
+import * as SecureStore from 'expo-secure-store';
 
 
 export default function verifyotp() {
   const verificationId = useSelector(setVerificationId);
   // console.log('Retrieved verificationId from state:', verificationId.payload.auth.verificationId);
-  
+    const [phone,setPhone] = useState(null)
     const [otpInput, setOtpInput] = useState('');
     const { userId } = useLocalSearchParams();
     const router = useRouter();
 
     const handleOtpVerification = async () => {
+      try {
       const credential = firebase.auth.PhoneAuthProvider.credential(verificationId.payload.auth.verificationId, otpInput);
-    try {
-      await firebase.auth().signInWithCredential(credential);
+      const userCredential = await firebase.auth().signInWithCredential(credential);
       // setMessage('Phone authentication successful');
+      const user = userCredential.user;
+      const token = await user.getIdToken();
+      // console.log("user data is",user);
+      // console.log("token is ",token);
+          // const token = await credential.user.getIdToken();
+      await SecureStore.setItemAsync('userToken', token);
+      setPhone(user.phoneNumber)
       Alert.alert('Phone authentication successful')
       router.push('/help')
     } catch (err) {
@@ -94,7 +102,9 @@ const styles = StyleSheet.create({
   textInputContainer: {
     marginTop: 60,
     // marginLeft:-60,
-    width:270,
+    marginHorizontal:"auto",
+    justifyContent:"center",
+    width:250,
   },
   otpbuttom:{
     marginTop:70,

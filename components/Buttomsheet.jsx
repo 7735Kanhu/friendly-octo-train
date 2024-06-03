@@ -183,6 +183,30 @@ const Buttomsheet = () => {
                                 <MaterialCommunityIcons name="book-education" size={24} color="#fff" />
                                 <Text style={{color:'#fff'}}>Education</Text>
                                 </TouchableOpacity>
+                                <TouchableOpacity style={styles.categoryView}>
+                                <FontAwesome5 name="hand-holding-medical" size={24} color="#fff" />
+                                <Text style={{color:'#fff'}}>Medical</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.categoryView}>
+                                <MaterialIcons name="local-grocery-store" size={24} color="#fff" />
+                                <Text style={{color:'#fff'}}>Grocery</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.categoryView}>
+                                <MaterialCommunityIcons name="book-education" size={24} color="#fff" />
+                                <Text style={{color:'#fff'}}>Education</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.categoryView}>
+                                <FontAwesome5 name="hand-holding-medical" size={24} color="#fff" />
+                                <Text style={{color:'#fff'}}>Medical</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.categoryView}>
+                                <MaterialIcons name="local-grocery-store" size={24} color="#fff" />
+                                <Text style={{color:'#fff'}}>Grocery</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.categoryView}>
+                                <MaterialCommunityIcons name="book-education" size={24} color="#fff" />
+                                <Text style={{color:'#fff'}}>Education</Text>
+                                </TouchableOpacity>
                             </ScrollView>
                         </View>
                         </SafeAreaView>
@@ -269,6 +293,7 @@ const styles = StyleSheet.create({
         backgroundColor:"green",
         padding:5,
         borderRadius:5,
+        width:100
         
     }
 });
