@@ -65,7 +65,15 @@ export default function Layout() {
              return <FontAwesome5 name="history" size={22} color={color} />
             },
             tabBarLabel: "HISTORY",
-            headerTitle: "History",
+            headerTitle: "Helping History",
+            headerStyle: {
+              backgroundColor: 'green',
+              borderBottomWidth: 0,  
+              elevation: 0,          
+              shadowOpacity: 0,      
+            },
+            headerTitleAlign: 'center',
+            headerTintColor: '#fff',
           }}
         />
       <Tabs.Screen
