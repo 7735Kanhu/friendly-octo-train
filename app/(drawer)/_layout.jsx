@@ -20,9 +20,9 @@ const CustomDrawerContent = (props) =>{
     const router = useRouter();
 
 
-  useEffect(() => {
-    console.log(pathname);
-  }, [pathname]);
+  // useEffect(() => {
+  //   console.log(pathname);
+  // }, [pathname]);
 
   const handleLogout = async()=>{
     await SecureStore.deleteItemAsync('userToken');

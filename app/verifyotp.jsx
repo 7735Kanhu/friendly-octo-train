@@ -26,9 +26,6 @@ export default function verifyotp() {
       // setMessage('Phone authentication successful');
       const user = userCredential.user;
       const token = await user.getIdToken();
-      // console.log("user data is",user);
-      // console.log("token is ",token);
-          // const token = await credential.user.getIdToken();
       await SecureStore.setItemAsync('userToken', token);
       setPhone(user.phoneNumber)
       Alert.alert('Phone authentication successful')
