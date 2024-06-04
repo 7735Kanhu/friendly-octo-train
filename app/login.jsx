@@ -8,6 +8,7 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   Alert,
+  ActivityIndicator,
 } from "react-native";
 import React, { useRef, useState } from "react";
 import PhoneInput from "react-native-phone-input";
@@ -15,10 +16,14 @@ import CountryPicker from "react-native-country-picker-modal";
 import { SafeAreaProvider, useSafeAreaInsets } from "react-native-safe-area-context";
 import { Link } from "expo-router";
 import { useRouter } from 'expo-router';
-import firebase from "../firebase";
-import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
+// import firebase from "../firebase";
+// import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
 import { useDispatch } from 'react-redux';
-import { setVerificationId } from '../store/authSlice'
+import { setVerificationId , setPhoneNumbers} from '../store/authSlice'
+import axios from "axios";
+import apiUrl from "../apiUrl";
+import { PacmanIndicator } from 'react-native-indicators';
+
 
 const Login = () => {
   const router = useRouter();
@@ -36,6 +41,7 @@ const Login = () => {
   const recaptchaVerifier = useRef(null);
   // const [verificationId, setVerificationId] = useState(null);
   const [message, setMessage] = useState('');
+  const [isLoding,setisLoading] = useState(false)
 
   const onSelectCountry = (country) => {
     setCountryCode(country.cca2);
@@ -45,19 +51,22 @@ const Login = () => {
 
 
   const onSubmit = async () => {
-    const phoneProvider = new firebase.auth.PhoneAuthProvider();
-    try {
-      const verificationId = await phoneProvider.verifyPhoneNumber(phoneNumber, recaptchaVerifier.current);
-      setMessage('Verification code sent to your phone');
-      if(verificationId){
-        Alert.alert(`OTP send to your phone number${phoneNumber}`)
-        dispatch(setVerificationId(verificationId));
-        router.push('/verifyotp')
-      }else{
-        Alert.alert("Something wents wrong.")
-      }
+    setisLoading(true)
+    try{
+      // const number = phoneNumber.slice(3,13)
+      // console.log(number,apiUrl);
+      // const responce = await axios.post(`${apiUrl}register/`,{phone:number});
+      // console.log(responce.data);
+      // if (responce.data) {
+      //   Alert.alert(responce.data.success);
+      //   dispatch(setPhoneNumbers(number))
+      //   router.push('/verifyotp')
+      // }
+      router.push('/verifyotp')
     } catch (err) {
       setMessage(`Error: ${err.message}`);
+    }finally{
+      setisLoading(false);
     }
   };
 
@@ -67,18 +76,8 @@ const Login = () => {
 
   return (
     <View style={styles.container}>
-      <FirebaseRecaptchaVerifierModal
-        ref={recaptchaVerifier}
-        firebaseConfig={{
-          apiKey: "AIzaSyA5THpt_2geodgKCzjKP0D0k8wyeAHGdZA",
-          authDomain: "help-7c56d.firebaseapp.com",
-          projectId: "help-7c56d",
-          storageBucket: "help-7c56d.appspot.com",
-          messagingSenderId: "313013637870",
-          appId: "1:313013637870:web:7dcb9681483f1ba95199ff",
-          measurementId: "G-EZHY8516RB"
-        }}
-      />
+        {isLoding ? (<PacmanIndicator color="#fff" size={100}/>):
+      ( <>
       <View style={{ alignItems: "center" }}>
         <Image
           source={require("../assets/images/otp3.webp")}
@@ -132,6 +131,7 @@ const Login = () => {
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
+      </>)}
     </View>
   );
 };

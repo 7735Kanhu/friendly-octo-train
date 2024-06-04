@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native'
+import { View, Text, StyleSheet, Image, TouchableOpacity, Alert,ActivityIndicator } from 'react-native'
 import React, { useState } from 'react'
 import OTPTextView from 'react-native-otp-textinput';
 import { Link } from 'expo-router';
@@ -6,33 +6,44 @@ import { Link } from 'expo-router';
 import { verifyOtp } from './../appwriteConfig.js';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { useSelector } from 'react-redux';
-import { setVerificationId } from '../store/authSlice';
+import { phoneNumbers } from '../store/authSlice';
 import firebase from '../firebase';
 import * as SecureStore from 'expo-secure-store';
+import axios from 'axios';
+import apiUrl from '../apiUrl.jsx';
+import { PacmanIndicator } from 'react-native-indicators';
 
 
 export default function verifyotp() {
-  const verificationId = useSelector(setVerificationId);
-  // console.log('Retrieved verificationId from state:', verificationId.payload.auth.verificationId);
+  // const verificationId = useSelector(setVerificationId);
+  const phoneNumber = useSelector(state=>state.auth.phoneNumbers);
     const [phone,setPhone] = useState(null)
     const [otpInput, setOtpInput] = useState('');
     const { userId } = useLocalSearchParams();
+    const [isLoding,setisLoading] = useState(false)
+
     const router = useRouter();
 
     const handleOtpVerification = async () => {
+      setisLoading(true)
       try {
-      const credential = firebase.auth.PhoneAuthProvider.credential(verificationId.payload.auth.verificationId, otpInput);
-      const userCredential = await firebase.auth().signInWithCredential(credential);
+      // const credential = firebase.auth.PhoneAuthProvider.credential(verificationId.payload.auth.verificationId, otpInput);
+      // const userCredential = await firebase.auth().signInWithCredential(credential);
       // setMessage('Phone authentication successful');
-      const user = userCredential.user;
-      const token = await user.getIdToken();
-      await SecureStore.setItemAsync('userToken', token);
-      setPhone(user.phoneNumber)
+      // const user = userCredential.user;
+      // const token = await user.getIdToken();
+      // //////console.log(phoneNumber,otpInput);
+      // //////const responce = await axios.post(`${apiUrl}verify_otp_phone/`,{phone:phoneNumber,otp:otpInput});
+      //////// console.log(responce.data);
+      // await SecureStore.setItemAsync('userToken', token);
+      // setPhone(user.phoneNumber)
       Alert.alert('Phone authentication successful')
       router.push('/help')
     } catch (err) {
       // setMessage(`Error: ${err.message}`);
       console.log(err.message);
+    }finally{
+      setisLoading(false)
     }
   };
   const handleOTPChange = (enteredOTP) => {
@@ -41,6 +52,9 @@ export default function verifyotp() {
 };
   return (
     <View style={styles.container}>
+      {isLoding ? (<View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
+        <PacmanIndicator color='green' size="large"/>
+        </View>):(<>
       <View>
       <Image
           source={require("../assets/images/otp4.png")}
@@ -63,7 +77,7 @@ export default function verifyotp() {
             <Text style={{fontSize:20,color:'#fff'}}>Verify OTP</Text>
             {/* </Link> */}
         </TouchableOpacity>
-      </View>
+      </View></>)}
     </View>
   )
 }

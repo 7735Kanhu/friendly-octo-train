@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { router } from 'expo-router'
 import MapView, {Marker} from 'react-native-maps';
 import * as Location from 'expo-location';
-
+// import * as Permissions from 'expo-permissions';
 
 export default function Page() {
   const [mapRegion,setMapRegion] = useState({
@@ -19,7 +19,7 @@ export default function Page() {
         setErrorMsg('Permission to access location was denied');
         return;
       }
-      let location = await Location.getCurrentPositionAsync({enableHighAccuracy: true});
+      let location = await Location.getCurrentPositionAsync({enableHighAccuracy: true,timeInterval: 5000});
       setMapRegion({
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
@@ -27,7 +27,7 @@ export default function Page() {
         longitudeDelta: 0.0421,
       })
       console.log(location.coords.latitude,location.coords.longitude);
-  }
+  };
   useEffect(()=>{userLocation()},[])
   return (
     <View style={styles.container}>

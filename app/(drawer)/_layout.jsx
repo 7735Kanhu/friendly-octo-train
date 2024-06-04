@@ -88,6 +88,7 @@ const styles = StyleSheet.create({
         borderBottomColor: "#ccc",
         borderBottomWidth: 1,
         marginBottom: 10,
+        backgroundColor:"green",
       },
       userImg: {
         borderRadius: 40,
@@ -99,10 +100,12 @@ const styles = StyleSheet.create({
       userName: {
         fontSize: 16,
         fontWeight: 'bold',
+        color:"#fff",
       },
       userEmail: {
         fontSize:16,
         fontStyle: 'italic',
         textDecorationLine: 'underline',
+        color:"#fff",
       }
 })

@@ -7,6 +7,7 @@ const initialState = {
   verificationId: '',
   phoneNumber: '',
   loading: false,
+  token:null,
 };
 
 export const loadAuthState = createAsyncThunk('auth/loadAuthState', async () => {
@@ -18,19 +19,20 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    login: (state) => {
-      state.isAuthenticated = true;
-      AsyncStorage.setItem('isAuthenticated', 'true');
+    login: (state,action) => {
+      // state.isAuthenticated = true;
+      state.token = action.payload;
+      SecureStorage.setItem('token', action.payload);
     },
     logout: (state) => {
       state.isAuthenticated = false;
-      AsyncStorage.removeItem('isAuthenticated');
+      SecureStorage.removeItem('isAuthenticated');
     },
     setVerificationId: (state, action) => {
       console.log('Setting verificationId in state:', action.payload);
       state.verificationId = action.payload;
     },
-    setPhoneNumber: (state, action) => {
+    setPhoneNumbers: (state, action) => {
       state.phoneNumber = action.payload;
     },
   },
@@ -48,6 +50,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { login, logout, setVerificationId, setPhoneNumber } = authSlice.actions;
+export const { login, logout, setVerificationId, setPhoneNumbers } = authSlice.actions;
 
 export default authSlice.reducer;
