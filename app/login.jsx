@@ -55,11 +55,11 @@ const Login = () => {
     try{
       const number = phoneNumber.slice(3,13)
       console.log(number,apiUrl);
-      const responce = await axios.post(`${apiUrl}register/`,{phone:number});
+      dispatch(setPhoneNumbers(number))
+      const responce = await axios.post(`${apiUrl}otp_send_to_user/`,{phone:number});
       console.log(responce.data);
       if (responce.data) {
         Alert.alert(responce.data.success);
-        dispatch(setPhoneNumbers(number))
         router.push('/verifyotp')
       }
       // router.push('/verifyotp')

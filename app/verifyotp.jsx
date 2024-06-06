@@ -6,7 +6,7 @@ import { Link } from 'expo-router';
 import { verifyOtp } from './../appwriteConfig.js';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { useSelector } from 'react-redux';
-import { phoneNumbers } from '../store/authSlice';
+// import { phoneNumbers } from '../store/authSlice';
 import firebase from '../firebase';
 import * as SecureStore from 'expo-secure-store';
 import axios from 'axios';
@@ -16,7 +16,7 @@ import { PacmanIndicator } from 'react-native-indicators';
 
 export default function verifyotp() {
   // const verificationId = useSelector(setVerificationId);
-  const phoneNumber = useSelector(state=>state.auth.phoneNumbers);
+  const phoneNumber = useSelector((state)=>state.auth.phoneNumber);
     const [phone,setPhone] = useState(null)
     const [otpInput, setOtpInput] = useState('');
     const { userId } = useLocalSearchParams();
@@ -32,15 +32,15 @@ export default function verifyotp() {
       // setMessage('Phone authentication successful');
       // const user = userCredential.user;
       // const token = await user.getIdToken();
-      console.log(phoneNumber,otpInput);
-      const responce = await axios.post(`${apiUrl}verify_otp_phone/`,{phone:phoneNumber,otp:otpInput});
+      console.log(phoneNumber,otpInput,apiUrl);
+      const responce = await axios.post(`http://98.70.76.242:8000/api/verify_otp/`,{phone:Number(phoneNumber),otp:Number(otpInput)});
       console.log(responce.data);
-      await SecureStore.setItemAsync('userToken', token);
-      setPhone(user.phoneNumber)
+      await SecureStore.setItemAsync('userToken',  JSON.stringify(responce.data.token));
+      // setPhone(user.phoneNumber)
       Alert.alert('Phone authentication successful')
       router.push('/help')
     } catch (err) {
-      setMessage(`Error: ${err.message}`);
+      // setMessage(`Error: ${err.message}`);
       console.log(err.message);
     }finally{
       setisLoading(false)
@@ -53,7 +53,7 @@ export default function verifyotp() {
   return (
     <View style={styles.container}>
       {isLoding ? (<View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
-        <PacmanIndicator color='green' size="large"/>
+        <PacmanIndicator color='green' size={100}/>
         </View>):(<>
       <View>
       <Image

@@ -15,6 +15,7 @@ export default function _layout() {
   useEffect(() => {
     const checkToken = async () => {
         const token = await SecureStore.getItemAsync('userToken');
+        console.log(token);
         setUserToken(token);
         setIsLoading(false);
         console.log(token);
@@ -42,23 +43,21 @@ if (isLoading) {
     // <ClerkProvider publishableKey="pk_test_bGFyZ2UtZHJhZ29uLTI0LmNsZXJrLmFjY291bnRzLmRldiQ">
     <Provider store={store}>
       <SafeAreaView style={styles.container}>
+        <Stack screenOptions={{headerShown:false,headerStyle: {backgroundColor: "green",},headerTintColor: "white",}}initialRouteName={userToken ? 'help' : 'index'} >
       {
         userToken ? (
-          <Stack screenOptions={{headerShown:false,headerStyle: {backgroundColor: "green",},headerTintColor: "white",}}initialRouteName='help' >
       <Stack.Screen name="(drawer)" options={{ headerShown:false }} />
-      {/* <Stack.Screen name="about" options={{ headerTitle: "About" }} />
-      <Stack.Screen name="blog/index" options={{ headerTitle: "All Blog post" }}/>
-      <Stack.Screen name="contact" options={{ headerTitle: "Contact",presentation: 'modal' }} /> */}
-    </Stack>
+   
         ):(
-          <Stack screenOptions={{headerShown:false,headerStyle: {backgroundColor: "green",},headerTintColor: "white",}}initialRouteName='index' >
+          <>
       <Stack.Screen name="index" options={{ headerShown:false }} />
       <Stack.Screen name="login" options={{ headerShown:false }} />
       <Stack.Screen name="verifyotp" options={{ headerShown:false }} />
+      </>
 
-    </Stack>
-        )
-      }
+    )
+  }
+  </Stack>
     </SafeAreaView>
     </Provider>
   );

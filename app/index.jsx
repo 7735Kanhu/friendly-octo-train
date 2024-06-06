@@ -24,19 +24,6 @@ export default function Page() {
         </Link>
       </TouchableOpacity>
       </View>
-    {/* <Text style={{fontSize:30}}>Welcome To Our App</Text>
-    <Link href={'/about'}>
-    <Button title='Goto About us Page'/>
-    </Link>
-    <Link href={'/blog'} asChild>
-        <Button title='Goto Blog Page'/>
-    </Link>
-    <Link href={'/contact'} asChild>
-        <Button title='Goto Contact Page'/>
-    </Link>
-    <Link href={'/help'} asChild>
-        <Button title='Goto Tabs'/>
-    </Link> */}
   </View>
   )
 }

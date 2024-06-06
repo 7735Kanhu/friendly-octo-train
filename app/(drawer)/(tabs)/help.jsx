@@ -1,4 +1,4 @@
-import { View, Text, Button, StyleSheet } from 'react-native'
+import { View, Text, Button, StyleSheet, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { router } from 'expo-router'
 import MapView, {Marker} from 'react-native-maps';
@@ -32,7 +32,9 @@ export default function Page() {
   return (
     <View style={styles.container}>
       <MapView style={styles.map} region={mapRegion}>
-        <Marker coordinate={mapRegion} title='Marker' />
+        <Marker coordinate={mapRegion} title='Marker' >
+        <Image source={require('../../../assets/images/help_man.png')} style={{ width: 40, height: 40 }} />
+        </Marker>
       </MapView>
     </View>
   )
