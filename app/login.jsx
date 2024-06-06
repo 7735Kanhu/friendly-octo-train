@@ -53,16 +53,16 @@ const Login = () => {
   const onSubmit = async () => {
     setisLoading(true)
     try{
-      // const number = phoneNumber.slice(3,13)
-      // console.log(number,apiUrl);
-      // const responce = await axios.post(`${apiUrl}register/`,{phone:number});
-      // console.log(responce.data);
-      // if (responce.data) {
-      //   Alert.alert(responce.data.success);
-      //   dispatch(setPhoneNumbers(number))
-      //   router.push('/verifyotp')
-      // }
-      router.push('/verifyotp')
+      const number = phoneNumber.slice(3,13)
+      console.log(number,apiUrl);
+      const responce = await axios.post(`${apiUrl}register/`,{phone:number});
+      console.log(responce.data);
+      if (responce.data) {
+        Alert.alert(responce.data.success);
+        dispatch(setPhoneNumbers(number))
+        router.push('/verifyotp')
+      }
+      // router.push('/verifyotp')
     } catch (err) {
       setMessage(`Error: ${err.message}`);
     }finally{

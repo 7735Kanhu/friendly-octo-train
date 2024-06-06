@@ -19,7 +19,7 @@ export default function Page() {
         setErrorMsg('Permission to access location was denied');
         return;
       }
-      let location = await Location.getCurrentPositionAsync({enableHighAccuracy: true,timeInterval: 5000});
+      let location = await Location.getCurrentPositionAsync({enableHighAccuracy: true,timeInterval: 3000});
       setMapRegion({
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,

@@ -32,15 +32,15 @@ export default function verifyotp() {
       // setMessage('Phone authentication successful');
       // const user = userCredential.user;
       // const token = await user.getIdToken();
-      // //////console.log(phoneNumber,otpInput);
-      // //////const responce = await axios.post(`${apiUrl}verify_otp_phone/`,{phone:phoneNumber,otp:otpInput});
-      //////// console.log(responce.data);
-      // await SecureStore.setItemAsync('userToken', token);
-      // setPhone(user.phoneNumber)
+      console.log(phoneNumber,otpInput);
+      const responce = await axios.post(`${apiUrl}verify_otp_phone/`,{phone:phoneNumber,otp:otpInput});
+      console.log(responce.data);
+      await SecureStore.setItemAsync('userToken', token);
+      setPhone(user.phoneNumber)
       Alert.alert('Phone authentication successful')
       router.push('/help')
     } catch (err) {
-      // setMessage(`Error: ${err.message}`);
+      setMessage(`Error: ${err.message}`);
       console.log(err.message);
     }finally{
       setisLoading(false)

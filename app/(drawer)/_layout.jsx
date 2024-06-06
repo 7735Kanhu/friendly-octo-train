@@ -70,8 +70,8 @@ const CustomDrawerContent = (props) =>{
 export default function Layout() {
   return (
     <Drawer  drawerContent={(props)=><CustomDrawerContent {...props} />} screenOptions={{headerShown:false}}>
-        <Drawer.Screen name='payments' options={{headerShown:true}} />
-        <Drawer.Screen name='settings' options={{headerShown:true}} />
+        {/* <Drawer.Screen name='payments' options={{headerShown:true}} /> */}
+        {/* <Drawer.Screen name='settings' options={{headerShown:true}} /> */}
     </Drawer>
   )
 }
