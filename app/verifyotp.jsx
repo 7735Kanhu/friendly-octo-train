@@ -33,7 +33,7 @@ export default function verifyotp() {
       // const user = userCredential.user;
       // const token = await user.getIdToken();
       console.log(phoneNumber,otpInput,apiUrl);
-      const responce = await axios.post(`http://98.70.76.242:8000/api/verify_otp/`,{phone:Number(phoneNumber),otp:Number(otpInput)});
+      const responce = await axios.post(`${apiUrl}verify_otp/`,{phone:Number(phoneNumber),otp:Number(otpInput)});
       console.log(responce.data);
       await SecureStore.setItemAsync('userToken',  JSON.stringify(responce.data.token));
       // setPhone(user.phoneNumber)

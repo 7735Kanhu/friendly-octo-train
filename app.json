@@ -41,7 +41,12 @@
     },
     "plugins": [
       "expo-router",
-      "expo-firebase-core"
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow Community Helper to use your location."
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true

@@ -14,6 +14,7 @@ import { Feather } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 
 const Buttomsheet = () => {
     const bottomSheetModalRef  = useRef(null);
@@ -23,6 +24,7 @@ const Buttomsheet = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [selectedFeature,setSelectedFeature] = useState()
+    const router = useRouter();
 
 
     const screenWidth = Dimensions.get('window').width;
@@ -37,7 +39,8 @@ const Buttomsheet = () => {
     const fetchFeatures = async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`${apiUrl}/feature_view/`);
+            const response = await axios.get(`${apiUrl}feature_view/`);
+            console.log(response.data);
             setFeatures(response.data.data);  // Ensure data is an array
         } catch (error) {
             console.error(error);
@@ -49,21 +52,23 @@ const Buttomsheet = () => {
 
     // handleSubFeatucher
     const handleSubFeatucher= async(id)=>{
-      try {
-        const responce = await axios.get(`${apiUrl}/subfeature_view/${id}`);
-        console.log(responce.data.data);
-        setSubFeatures(responce.data.data);
-        setFeatures([])
         setSelectedFeature(id)
-        // console.log(features);
-      } catch (error) {
-        console.log(error);
-      }
+    //   try {
+    //     const responce = await axios.get(`${apiUrl}/subfeature_view/${id}`);
+    //     console.log(responce.data.data);
+    //     setSubFeatures(responce.data.data);
+    //     setFeatures([])
+    //     setSelectedFeature(id)
+    //     // console.log(features);
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
     }
-    // handelcreateHelp
-    const handelcreateHelp =()=>{
-
+useEffect(()=>{
+    if(selectedFeature?.length>0){
+        router.push(`/subcategory/${selectedFeature}/`)
     }
+},[selectedFeature])
 
 
     const animations = Animations[ Math.floor(Math.random() * Animations.length)] 
@@ -87,11 +92,15 @@ const Buttomsheet = () => {
                         <View style={{marginTop:10,width:screenWidth,paddingHorizontal:20}}>
                             <Text style={{fontWeight:"bold",fontSize:15,width:'100%'}}>Category</Text>
                             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{flexDirection:"row",marginTop:15,gap:10,alignItems:'center',flexWrap:'wrap'}}>
-                                <TouchableOpacity style={styles.categoryView}>
+                                {
+                                    features?.length > 0 && features ? features.map(item=><View key={item.id}>
+                                <TouchableOpacity style={styles.categoryView} onPress={()=>handleSubFeatucher(item.type)}>
                                 <FontAwesome5 name="hand-holding-medical" size={24} color="#fff" />
-                                <Text style={{color:'#fff'}}>Medical</Text>
+                                <Text style={{color:'#fff'}}>{item.type}</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={styles.categoryView}>
+                                    </View>):<View><Text>There are no feature avilable</Text></View>
+                                }
+                                {/* <TouchableOpacity style={styles.categoryView}>
                                 <MaterialIcons name="local-grocery-store" size={24} color="#fff" />
                                 <Text style={{color:'#fff'}}>Grocery</Text>
                                 </TouchableOpacity>
@@ -206,7 +215,7 @@ const Buttomsheet = () => {
                                 <TouchableOpacity style={styles.categoryView}>
                                 <MaterialCommunityIcons name="book-education" size={24} color="#fff" />
                                 <Text style={{color:'#fff'}}>Education</Text>
-                                </TouchableOpacity>
+                                </TouchableOpacity> */}
                             </ScrollView>
                         </View>
                         </SafeAreaView>
