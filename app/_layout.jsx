@@ -14,7 +14,7 @@ export default function _layout() {
   useEffect(() => {
     const checkToken = async () => {
       const token = await SecureStore.getItemAsync('userToken');
-      console.log(token);
+      // console.log(token);
       setUserToken(token);
       setIsLoading(false);
     };
@@ -48,7 +48,7 @@ export default function _layout() {
           {userToken ? (
             <>
               <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
-              {/* <Stack.Screen name="subcategory" options={{ headerShown: false }} /> */}
+              {/* <Stack.Screen name="subcategory/[id]"  options={{ headerTitle: "All Blog post" }}  /> */}
             </>
           ) : (
             <>

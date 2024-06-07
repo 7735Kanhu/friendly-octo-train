@@ -3,7 +3,7 @@ import { View, Text, Button, StyleSheet, Image, TouchableOpacity } from 'react-n
 import React from 'react'
 import {Link} from 'expo-router'
 
-export default function Page() {
+export default function index() {
   return (
     <View style={styles.container}>
       <View style={styles.img}>

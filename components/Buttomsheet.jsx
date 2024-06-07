@@ -41,7 +41,7 @@ const Buttomsheet = () => {
         setLoading(true);
         try {
             const response = await axios.get(`${apiUrl}feature_view/`);
-            console.log(response.data);
+            // console.log(response.data);
             setFeatures(response.data.data);  // Ensure data is an array
         } catch (error) {
             console.error(error);
@@ -52,24 +52,14 @@ const Buttomsheet = () => {
     }
 
     // handleSubFeatucher
-    const handleSubFeatucher= async(id)=>{
-        setSelectedFeature(id)
-    //   try {
-    //     const responce = await axios.get(`${apiUrl}/subfeature_view/${id}`);
-    //     console.log(responce.data.data);
-    //     setSubFeatures(responce.data.data);
-    //     setFeatures([])
+    // const handleSubFeatucher= async(id)=>{
     //     setSelectedFeature(id)
-    //     // console.log(features);
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    }
-useEffect(()=>{
-    if(selectedFeature?.length>0){
-        router.push(`/subcategory/${selectedFeature}/`)
-    }
-},[selectedFeature])
+    // }
+// useEffect(()=>{
+//     if(selectedFeature?.length>0){
+//         // router.push(`/subcategory/${selectedFeature}/`)
+//     }
+// },[selectedFeature])
 
 
     const animations = Animations[ Math.floor(Math.random() * Animations.length)] 

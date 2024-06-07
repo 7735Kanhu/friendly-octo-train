@@ -5,7 +5,7 @@ import MapView, {Marker} from 'react-native-maps';
 import * as Location from 'expo-location';
 // import * as Permissions from 'expo-permissions';
 
-export default function Page() {
+export default function Help() {
   const [mapRegion,setMapRegion] = useState({
     latitude: 20.359296060599497,
     longitude: 85.82318143450989,
