@@ -15,6 +15,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
+import Features from './Features';
 
 const Buttomsheet = () => {
     const bottomSheetModalRef  = useRef(null);
@@ -91,132 +92,7 @@ useEffect(()=>{
                         </View>
                         <View style={{marginTop:10,width:screenWidth,paddingHorizontal:20}}>
                             <Text style={{fontWeight:"bold",fontSize:15,width:'100%'}}>Category</Text>
-                            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{flexDirection:"row",marginTop:15,gap:10,alignItems:'center',flexWrap:'wrap'}}>
-                                {
-                                    features?.length > 0 && features ? features.map(item=><View key={item.id}>
-                                <TouchableOpacity style={styles.categoryView} onPress={()=>handleSubFeatucher(item.type)}>
-                                <FontAwesome5 name="hand-holding-medical" size={24} color="#fff" />
-                                <Text style={{color:'#fff'}}>{item.type}</Text>
-                                </TouchableOpacity>
-                                    </View>):<View><Text>There are no feature avilable</Text></View>
-                                }
-                                {/* <TouchableOpacity style={styles.categoryView}>
-                                <MaterialIcons name="local-grocery-store" size={24} color="#fff" />
-                                <Text style={{color:'#fff'}}>Grocery</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.categoryView}>
-                                <MaterialCommunityIcons name="book-education" size={24} color="#fff" />
-                                <Text style={{color:'#fff'}}>Education</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.categoryView}>
-                                <FontAwesome5 name="hand-holding-medical" size={24} color="#fff" />
-                                <Text style={{color:'#fff'}}>Medical</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.categoryView}>
-                                <MaterialIcons name="local-grocery-store" size={24} color="#fff" />
-                                <Text style={{color:'#fff'}}>Grocery</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.categoryView}>
-                                <MaterialCommunityIcons name="book-education" size={24} color="#fff" />
-                                <Text style={{color:'#fff'}}>Education</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.categoryView}>
-                                <MaterialCommunityIcons name="book-education" size={24} color="#fff" />
-                                <Text style={{color:'#fff'}}>Education</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.categoryView}>
-                                <FontAwesome5 name="hand-holding-medical" size={24} color="#fff" />
-                                <Text style={{color:'#fff'}}>Medical</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.categoryView}>
-                                <FontAwesome5 name="hand-holding-medical" size={24} color="#fff" />
-                                <Text style={{color:'#fff'}}>Medical</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.categoryView}>
-                                <FontAwesome5 name="hand-holding-medical" size={24} color="#fff" />
-                                <Text style={{color:'#fff'}}>Medical</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.categoryView}>
-                                <MaterialIcons name="local-grocery-store" size={24} color="#fff" />
-                                <Text style={{color:'#fff'}}>Grocery</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.categoryView}>
-                                <MaterialCommunityIcons name="book-education" size={24} color="#fff" />
-                                <Text style={{color:'#fff'}}>Education</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.categoryView}>
-                                <FontAwesome5 name="hand-holding-medical" size={24} color="#fff" />
-                                <Text style={{color:'#fff'}}>Medical</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.categoryView}>
-                                <MaterialIcons name="local-grocery-store" size={24} color="#fff" />
-                                <Text style={{color:'#fff'}}>Grocery</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.categoryView}>
-                                <MaterialCommunityIcons name="book-education" size={24} color="#fff" />
-                                <Text style={{color:'#fff'}}>Education</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.categoryView}>
-                                <FontAwesome5 name="hand-holding-medical" size={24} color="#fff" />
-                                <Text style={{color:'#fff'}}>Medical</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.categoryView}>
-                                <MaterialIcons name="local-grocery-store" size={24} color="#fff" />
-                                <Text style={{color:'#fff'}}>Grocery</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.categoryView}>
-                                <MaterialCommunityIcons name="book-education" size={24} color="#fff" />
-                                <Text style={{color:'#fff'}}>Education</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.categoryView}>
-                                <FontAwesome5 name="hand-holding-medical" size={24} color="#fff" />
-                                <Text style={{color:'#fff'}}>Medical</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.categoryView}>
-                                <MaterialIcons name="local-grocery-store" size={24} color="#fff" />
-                                <Text style={{color:'#fff'}}>Grocery</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.categoryView}>
-                                <MaterialCommunityIcons name="book-education" size={24} color="#fff" />
-                                <Text style={{color:'#fff'}}>Education</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.categoryView}>
-                                <FontAwesome5 name="hand-holding-medical" size={24} color="#fff" />
-                                <Text style={{color:'#fff'}}>Medical</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.categoryView}>
-                                <MaterialIcons name="local-grocery-store" size={24} color="#fff" />
-                                <Text style={{color:'#fff'}}>Grocery</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.categoryView}>
-                                <MaterialCommunityIcons name="book-education" size={24} color="#fff" />
-                                <Text style={{color:'#fff'}}>Education</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.categoryView}>
-                                <FontAwesome5 name="hand-holding-medical" size={24} color="#fff" />
-                                <Text style={{color:'#fff'}}>Medical</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.categoryView}>
-                                <MaterialIcons name="local-grocery-store" size={24} color="#fff" />
-                                <Text style={{color:'#fff'}}>Grocery</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.categoryView}>
-                                <MaterialCommunityIcons name="book-education" size={24} color="#fff" />
-                                <Text style={{color:'#fff'}}>Education</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.categoryView}>
-                                <FontAwesome5 name="hand-holding-medical" size={24} color="#fff" />
-                                <Text style={{color:'#fff'}}>Medical</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.categoryView}>
-                                <MaterialIcons name="local-grocery-store" size={24} color="#fff" />
-                                <Text style={{color:'#fff'}}>Grocery</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.categoryView}>
-                                <MaterialCommunityIcons name="book-education" size={24} color="#fff" />
-                                <Text style={{color:'#fff'}}>Education</Text>
-                                </TouchableOpacity> */}
-                            </ScrollView>
+                            <Features features={features}/>
                         </View>
                         </SafeAreaView>
                     
